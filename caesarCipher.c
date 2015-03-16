@@ -1,7 +1,6 @@
 // Caesar Cipher
 // Arad Reed
 
-// Make sure passed integer isn't negative
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -11,8 +10,8 @@ void caesar(int key, char text[]);
 void decaesar(int key, char text[]);
 
 int main(int argc, char* argv[0]) {
-	char str[] = {"Be sure to drink your Ovaltine!"};
-	
+	char str[] = {"This is a test!"};
+
 	if (argc < 2) {
 		printf("Please pass in a key value!\n");
 		return 1;
