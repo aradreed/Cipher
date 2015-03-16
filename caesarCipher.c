@@ -2,29 +2,56 @@
 // Arad Reed
 
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+
+#define STR_LENGTH 256
 
 void caesar(int key, char text[]);
 void decaesar(int key, char text[]);
 
 int main(int argc, char* argv[0]) {
-	char str[] = {"This is a test!"};
+	char str[STR_LENGTH];
 
-	if (argc < 2) {
-		printf("Please pass in a key value!\n");
+	if (argc < 4) {
+		printf("Please pass in a decrypt/encrypt, a filename, and a key value!\n");
 		return 1;
 	}
 	
 	else {
-		int key = atoi(argv[1]);
+		bool encrypt;
 		
-		caesar(key, str);
-		printf("%s\n", str);
+		// Check whether encrypting or decrypting
+		if (strcmp(argv[1], "encrypt") == 0) 
+			encrypt = true;
+		else if (strcmp(argv[1], "decrypt") == 0)
+			encrypt = false;
+		else {
+			printf("Please enter a valid option (encrypt/decrypt)");
+			return 1;
+		}
 		
-		decaesar(key, str);
-		printf("%s\n", str);
+		FILE* file = fopen(argv[2], "r");
+		
+		if (file == NULL) {
+			printf("Please enter a valid filename");
+			return 2;
+		}
+		
+		int key = atoi(argv[3]);
+		
+		while(fgets(str, sizeof(str), file) != NULL) {
+			if (encrypt) {
+				caesar(key, str);
+				printf("%s", str);
+			}
+			else {
+				decaesar(key, str);
+				printf("%s", str);
+			}
+		}
 	}
 	
 	return 0;
