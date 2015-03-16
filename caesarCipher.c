@@ -46,5 +46,25 @@ void caesar(int key, char str[]) {
 }
 
 void decaesar(int key, char str[]) {
-		
+	int length = strlen(str);
+
+	for (int i = 0; i < length; i++) {
+		if (islower(str[i])) {
+			int num = (str[i] - 'a' - key);
+			
+			// Mod interacts differently with negative values. qc + r (nonnegative) = num
+			if (num < 0)
+				num += 26;
+			
+			str[i] = (num % 26) + 'a';
+		}
+		else if (isupper(str[i])) {
+			int num = (str[i] - 'A' - key);
+			
+			if (num < 0)
+				num += 26;
+			
+			str[i] = (num % 26) + 'A';
+		}
+	}
 }
