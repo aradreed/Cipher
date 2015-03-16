@@ -6,6 +6,7 @@
 #include <string.h>
 
 void vigenere(char keyword[], char str[]);
+void devigenere(char keyword[], char str[]);
 
 int main(int argc, char* argv[0]) {
 	char str[] = "This is a test sentence. It works!";
@@ -17,6 +18,8 @@ int main(int argc, char* argv[0]) {
 	
 	else {
 		vigenere(argv[1], str);
+		printf("%s\n", str);
+		devigenere(argv[1], str);
 		printf("%s\n", str);
 	}
 	
@@ -47,6 +50,37 @@ void vigenere(char keyword[], char str[]) {
 		
 		else if (isupper(str[i])) {
 			str[i] = ((str[i] - 'A' + getKey(keyword[j])) % 26) + 'A';
+			j = (j+1) % keywordLength;
+		}
+	}
+}
+
+void devigenere(char keyword[], char str[]) {
+	int length = strlen(str);
+	int keywordLength = strlen(keyword);
+	int j = 0;
+	
+	for (int i = 0; i < length; i++) {
+		
+		if (islower(str[i])) {
+			int num = str[i] - 'a' - getKey(keyword[j]);
+			
+			// Mod interacts differently with negative values. qc + r (nonnegative) = num
+			if (num < 0)
+				num += 26;
+			
+			str[i] = (num % 26) + 'a';
+			j = (j+1) % keywordLength;
+		}
+		
+		else if (isupper(str[i])) {
+			int num = str[i] - 'A' - getKey(keyword[j]);
+			
+			// Mod interacts differently with negative values. qc + r (nonnegative) = num
+			if (num < 0)
+				num += 26;
+			
+			str[i] = (num % 26) + 'A';
 			j = (j+1) % keywordLength;
 		}
 	}
