@@ -52,6 +52,8 @@ int main(int argc, char* argv[0]) {
 				printf("%s", str);
 			}
 		}
+		
+		fclose(file);
 	}
 	
 	return 0;
